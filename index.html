@@ -1,119 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Mariage Claudine et Moushe</title>
   <style>
-    /* --- Mise en page générale --- */
-    body{
-      background:#000;
-      color:#fff;
-      font-family:Arial,Helvetica,sans-serif;
-      text-align:center;
-      padding:40px;
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      padding: 40px;
     }
-    input,button{
-      padding:10px;
-      font-size:16px;
-      border-radius:6px;
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
     }
-    button{
-      cursor:pointer;
+    button {
+      cursor: pointer;
     }
-    .result{
-      margin-top:25px;
-      font-weight:bold;
-      color:lightgreen;
+    .result {
+      margin-top: 25px;
+      font-weight: bold;
+      color: lightgreen;
     }
-    .countdown{
-      font-size:24px;
-      margin:30px 0;
-      color:#FFD700;
+    .countdown {
+      font-size: 24px;
+      margin: 30px 0;
+      color: #FFD700;
     }
-    .whatsapp-btn{
-      background:#25D366;
-      border:none;
-      color:#fff;
-      padding:12px 22px;
-      font-size:16px;
-      border-radius:6px;
-      margin-bottom:35px;
+    .whatsapp-btn {
+      background: #25D366;
+      border: none;
+      color: #fff;
+      padding: 12px 22px;
+      font-size: 16px;
+      border-radius: 6px;
+      margin-bottom: 35px;
     }
-
-    /* --- Diaporama --- */
-    .slideshow-container{
-      max-width:90%;
-      margin:auto;
-      border-radius:15px;
-      overflow:hidden;
-      position:relative;
+    .slideshow-container {
+      max-width: 90%;
+      margin: auto;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
     }
-    .slide{
-      width:100%;
-      display:none;
-      border-radius:15px;
+    .slide {
+      width: 100%;
+      display: none;
+      border-radius: 15px;
     }
   </style>
 </head>
 <body>
-
   <h1>Bienvenue au mariage de Claudine et Moushe</h1>
-
-  <p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place&nbsp;:</p>
+  <p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place :</p>
   <input type="text" id="nomInvite" placeholder="ENTREZ VOTRE NOM EN MAJUSCULES">
   <button onclick="verifierInvite()">Vérifier</button>
-
   <p id="resultat" class="result"></p>
-
-  <!-- Compte à rebours -->
   <div id="compteARebours" class="countdown"></div>
-
-  <!-- Bouton WhatsApp -->
-  <button class="whatsapp-btn" onclick="envoyerWhatsApp()">
-    Confirmer ma présence sur WhatsApp
-  </button>
-
-  <!-- Diaporama -->
+  <button class="whatsapp-btn" onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
   <div class="slideshow-container">
-    <img class="slide" src="images/photo1.jpg" style="display:block;">
-    <img class="slide" src="images/photo2.jpg">
-    <img class="slide" src="images/photo3.jpg">
-    <img class="slide" src="images/photo4.jpg">
-    <img class="slide" src="images/photo5.jpg">
-    <img class="slide" src="images/photo6.jpg">
-    <img class="slide" src="images/photo7.jpg">
-    <img class="slide" src="images/photo8.jpg">
-    <img class="slide" src="images/photo9.jpg">
-    <img class="slide" src="images/photo10.jpg">
+    <img class="slide" src="photo1.jpg" style="display:block;">
+    <img class="slide" src="photo2.jpg">
+    <img class="slide" src="photo3.jpg">
+    <img class="slide" src="photo4.jpg">
+    <img class="slide" src="photo5.jpg">
+    <img class="slide" src="photo6.jpg">
+    <img class="slide" src="photo7.jpg">
+    <img class="slide" src="photo8.jpg">
+    <img class="slide" src="photo9.jpg">
+    <img class="slide" src="photo10.jpg">
   </div>
-
   <script>
-    /* ---------- Liste des invités (MAJUSCULES) ---------- */
     const invites = {
-      "CLAYTON": {table:1,place:"A1"},
-      "SUPRIELAND": {table:1,place:"A2"},
-      "RADLEY": {table:2,place:"B1"},
-      "DADY": {table:2,place:"B2"},
-      "JESUS": {table:3,place:"C1"},
-      "CHARLES": {table:3,place:"C2"},
-      "MARINA": {table:4,place:"D1"},
-      "TRÉSOR": {table:5,place:"E1"},
-      "CARINE": {table:5,place:"E2"},
-      "YAYH": {table:6,place:"F1"},
-      "MPINGI": {table:6,place:"F2"},
-      "GLORIA": {table:7,place:"G1"},
-      "RUTH": {table:7,place:"G2"},
-      "ODETTE": {table:7,place:"G3"},
-      "MOUJO": {table:7,place:"G4"},
-      "MAGALIE": {table:7,place:"G5"},
-      "RAUL": {table:8,place:"H1"},
-      "REGINA": {table:8,place:"H2"},
-      "ESMERALDA": {table:8,place:"H3"},
-      "JOJO": {table:8,place:"H4"},
-      "NATHALIE": {table:9,place:"I1"},
-      "JEANNOT": {table:9,place:"I2"},
-      "EMMANUELLA": {table:9,place:"I3"},
-      "ENOCK": {table:9,place:"I4"},
+      "CLAYTON": {table:1,place:"A1"}, "SUPRIELAND": {table:1,place:"A2"},
+      "RADLEY": {table:2,place:"B1"}, "DADY": {table:2,place:"B2"},
+      "JESUS": {table:3,place:"C1"}, "CHARLES": {table:3,place:"C2"},
+      "MARINA": {table:4,place:"D1"}, "TRÉSOR": {table:5,place:"E1"},
+      "CARINE": {table:5,place:"E2"}, "YAYH": {table:6,place:"F1"},
+      "MPINGI": {table:6,place:"F2"}, "GLORIA": {table:7,place:"G1"},
+      "RUTH": {table:7,place:"G2"}, "ODETTE": {table:7,place:"G3"},
+      "MOUJO": {table:7,place:"G4"}, "MAGALIE": {table:7,place:"G5"},
+      "RAUL": {table:8,place:"H1"}, "REGINA": {table:8,place:"H2"},
+      "ESMERALDA": {table:8,place:"H3"}, "JOJO": {table:8,place:"H4"},
+      "NATHALIE": {table:9,place:"I1"}, "JEANNOT": {table:9,place:"I2"},
+      "EMMANUELLA": {table:9,place:"I3"}, "ENOCK": {table:9,place:"I4"},
       "NICLETTE": {table:9,place:"I5"}
     };
 
@@ -130,16 +103,12 @@
       }
     }
 
-    /* ---------- WhatsApp ---------- */
     function envoyerWhatsApp(){
       const numero = "243851882645";
-      const msg = encodeURIComponent(
-        "Bonjour, je confirme ma présence au mariage de Claudine et Moushe"
-      );
+      const msg = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
       window.open(`https://wa.me/${numero}?text=${msg}`,'_blank');
     }
 
-    /* ---------- Compte à rebours ---------- */
     const dateMariage = new Date("2025-10-25T00:00:00").getTime();
     const compte = document.getElementById("compteARebours");
     setInterval(()=>{
@@ -151,7 +120,6 @@
       compte.textContent = `⏳ Compte à rebours : ${j}j ${h}h ${m}m ${s}s`;
     },1000);
 
-    /* ---------- Diaporama ---------- */
     let slideIndex = 0;
     const slides = document.getElementsByClassName("slide");
     function showSlides(){
@@ -159,7 +127,7 @@
       slideIndex++;
       if(slideIndex>slides.length){ slideIndex = 1; }
       slides[slideIndex-1].style.display="block";
-      setTimeout(showSlides,4000); // 4 s
+      setTimeout(showSlides,4000);
     }
     document.addEventListener("DOMContentLoaded", showSlides);
   </script>
