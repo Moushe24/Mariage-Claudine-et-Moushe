@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mariage Claudine et Moushe</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: lightgreen;
+        }
+        .countdown {
+            font-size: 24px;
+            margin-top: 30px;
+            color: #FFD700;
+        }
+        .whatsapp-btn {
+            margin-top: 30px;
+            background-color: #25D366;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue au mariage de Claudine et Moushe</h1>
+    <p>Tapez votre nom pour découvrir votre table et votre place :</p>
+    <input type="text" id="nomInvite" placeholder="Entrez votre nom" />
+    <button onclick="verifierInvite()">Vérifier</button>
+    <p class="result" id="resultat"></p>
+
+    <div class="countdown" id="compteARebours"></div>
+
+    <button class="whatsapp-btn" onclick="envoyerWhatsApp()">
+        Confirmer ma présence sur WhatsApp
+    </button>
+
+    <script>
+        const invites = {
+            "Clayton": { table: 1, place: "A1" },
+            "Strickland": { table: 1, place: "A2" },
+            "Radley": { table: 2, place: "B1" },
+            "Moushe": { table: 2, place: "B2" },
+            "Mibe": { table: 3, place: "C1" },
+            "Rosa": { table: 3, place: "C2" },
+            "François": { table: 4, place: "D1" },
+            "Miriam": { table: 4, place: "D2" },
+            "Tresor": { table: 5, place: "E1" },
+            "Carine": { table: 5, place: "E2" },
+            "Yayh'e": { table: 6, place: "F1" },
+            "Mping's": { table: 6, place: "F2" }
+        };
+
+        function verifierInvite() {
+            const nom = document.getElementById("nomInvite").value.trim();
+            const resultat = document.getElementById("resultat");
+
+            if (invites[nom]) {
+                const info = invites[nom];
+                resultat.innerHTML = `✅ Bonjour ${nom}, ta place est confirmée : Table ${info.table}, Place ${info.place} !`;
+            } else {
+                resultat.innerHTML = "❌ Désolé, ce nom n'est pas sur la liste.";
+            }
+        }
+
+        function envoyerWhatsApp() {
+            const message = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe !");
+            const numero = "243851882645"; // Numéro de contact
+            const lien = `https://wa.me/${numero}?text=${message}`;
+            window.open(lien, '_blank');
+        }
+
+        // Compte à rebours
+        const dateMariage = new Date("2025-10-25T00:00:00").getTime();
+        const compteARebours = document.getElementById("compteARebours");
+
+        setInterval(() => {
+            const maintenant = new Date().getTime();
+            const distance = dateMariage - maintenant;
+
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance < 0) {
+                compteARebours.innerHTML = "🎉 Le mariage a commencé !";
+            } else {
+                compteARebours.innerHTML = `⏳ Il reste ${jours}j ${heures}h ${minutes}m ${secondes}s avant le mariage !`;
+            }
+        }, 1000);
+    </script>
+
+    <audio autoplay loop>
+        <source src="romantic.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+    <br>
+    <img src="couple.jpg" alt="couple" style="width:300px; margin-top:20px;">
+</body>
+</html>
