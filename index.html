@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,7 +8,7 @@
     body {
       background: #000;
       color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
       padding: 40px;
     }
@@ -53,19 +54,13 @@
   </style>
 </head>
 <body>
-
   <h1>Bienvenue au mariage de Claudine et Moushe</h1>
   <p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place&nbsp;:</p>
   <input type="text" id="nomInvite" placeholder="ENTREZ VOTRE NOM EN MAJUSCULES">
   <button onclick="verifierInvite()">Vérifier</button>
-
   <p id="resultat" class="result"></p>
   <div id="compteARebours" class="countdown"></div>
-
-  <button class="whatsapp-btn" onclick="envoyerWhatsApp()">
-    Confirmer ma présence sur WhatsApp
-  </button>
-
+  <button class="whatsapp-btn" onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
   <div class="slideshow-container">
     <img class="slide" src="photo1.jpg" style="display:block;">
     <img class="slide" src="photo2.jpg">
@@ -78,41 +73,40 @@
     <img class="slide" src="photo9.jpg">
     <img class="slide" src="photo10.jpg">
   </div>
-
   <script>
     const invites = {
-      "CLAYTON": {table: 1, place: "A1"},
-      "STRICKLAND": {table: 1, place: "A2"},
-      "YVES": {table: 2, place: "B1"},
-      "MIBE": {table: 2, place: "B2"},
-      "FRANCOIS": {table: 3, place: "C1"},
-      "MPINGS": {table: 3, place: "C2"},
-      "MIRIAM": {table: 4, place: "D1"},
-      "TRÉSOR": {table: 5, place: "E1"},
-      "CARINE": {table: 5, place: "E2"},
-      "YAYHE": {table: 6, place: "F1"},
-      "JOJO": {table: 6, place: "F2"},
-      "GLORIA": {table: 7, place: "G1"},
-      "RUTH": {table: 7, place: "G2"},
-      "ZADIO": {table: 7, place: "G3"},
-      "MOUJO": {table: 7, place: "G4"},
-      "MAGALIE": {table: 7, place: "G5"},
-      "RAUL": {table: 8, place: "H1"},
-      "REGINA": {table: 8, place: "H2"},
-      "ESMERALDA": {table: 8, place: "H3"},
-      "COUPLE BALU": {table: 8, place: "H4"},
-      "NATHALIE": {table: 9, place: "I1"},
-      "JEANNOT": {table: 9, place: "I2"},
-      "EMMANUELLA": {table: 9, place: "I3"},
-      "ENOCK": {table: 9, place: "I4"},
-      "NICLETTE": {table: 9, place: "I5"}
-      "SANDRA": {table: 8, place: "H9"},
-      "URSUL": {table: 8, place: "H7"},
-      "MIREILLE": {table: 9, place: "I9"},
-      "MAO": {table: 9, place: "I8"},
-      "FRIZIANE": {table: 9, place: "I3"},
-      "JPS": {table: 9, place: "I4"},
-      "TRESOR": {table: 9, place: "I5"}
+      "CLAYTON": {table:1, place:"A1"},
+      "STRICKLAND": {table:1, place:"A2"},
+      "YVES": {table:2, place:"B1"},
+      "MIBE": {table:2, place:"B2"},
+      "FRANCOIS": {table:3, place:"C1"},
+      "MPINGS": {table:3, place:"C2"},
+      "MIRIAM": {table:4, place:"D1"},
+      "TRESOR": {table:5, place:"E1"},
+      "CARINE": {table:5, place:"E2"},
+      "OUAIS": {table:6, place:"F1"},
+      "JOJO": {table:6, place:"F2"},
+      "GLORIA": {table:7, place:"G1"},
+      "RUTH": {table:7, place:"G2"},
+      "ZADIO": {table:7, place:"G3"},
+      "MOUJO": {table:7, place:"G4"},
+      "MAGALIE": {table:7, place:"G5"},
+      "RAUL": {table:8, place:"H1"},
+      "REGINE": {table:8, place:"H2"},
+      "ESMERALDA": {table:8, place:"H3"},
+      "COUPLE BALU": {table:8, place:"H4"},
+      "SANDRA": {table:8, place:"H9"},
+      "URSULE": {table:8, place:"H7"},
+      "NATHALIE": {table:9, place:"I1"},
+      "JEANNOT": {table:9, place:"I2"},
+      "EMMANUELLA": {table:9, place:"I3"},
+      "ENOCK": {table:9, place:"I4"},
+      "NICLETTE": {table:9, place:"I5"},
+      "MIREILLE": {table:9, place:"I9"},
+      "MAO": {table:9, place:"I8"},
+      "FRIZIANE": {table:9, place:"I3"},
+      "JPS": {table:9, place:"I4"},
+      "TRESOR": {table:9, place:"I5"}
     };
 
     function verifierInvite(){
@@ -122,7 +116,7 @@
         const info = invites[nom];
         res.innerHTML = `✅ Bonjour ${nom}, ta place est confirmée : Table ${info.table}, Place ${info.place}.`;
         res.style.color = "lightgreen";
-      } else {
+      }else{
         res.innerHTML = `❌ Désolé, ce nom n'est pas sur la liste.`;
         res.style.color = "red";
       }
@@ -131,7 +125,7 @@
     function envoyerWhatsApp(){
       const numero = "243851882645";
       const msg = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
-      window.open(`https://wa.me/${numero}?text=${msg}`,'_blank');
+      window.open(`https://wa.me/${numero}?text=${msg}`, '_blank');
     }
 
     const dateMariage = new Date("2025-10-25T00:00:00").getTime();
@@ -156,6 +150,5 @@
     }
     document.addEventListener("DOMContentLoaded", showSlides);
   </script>
-
 </body>
 </html>
