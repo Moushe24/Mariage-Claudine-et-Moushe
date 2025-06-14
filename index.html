@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mariage de Claudine & Moushe</title>
+  <style>
+    body {
+      background: linear-gradient(135deg,#0d0d0d 0%, #1a1a1a 100%);
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      overflow-x:hidden;
+    }
+    h1{
+      font-size:2.5rem;
+      margin-bottom:0.2em;
+      animation: fadeSlide 1.2s ease-out forwards;
+    }
+    p{
+      animation: fadeSlide 1.4s ease-out forwards;
+    }
+    input,button{
+      padding:12px 16px;
+      font-size:1rem;
+      margin:10px;
+      border-radius:4px;
+      border:none;
+    }
+    button{
+      cursor:pointer;
+      background:#ff6a00;
+      color:#fff;
+      transition:background 0.3s;
+    }
+    button:hover{
+      background:#ff8800;
+    }
+    #message{
+      margin-top:20px;
+      font-size:1.2rem;
+      font-weight:bold;
+    }
+    .hero{
+      width:280px;
+      max-width:90%;
+      border-radius:12px;
+      margin-bottom:30px;
+      opacity:0;
+      animation:fadeSlide 1s ease-out 0.4s forwards;
+      box-shadow:0 6px 12px rgba(0,0,0,0.6);
+    }
+    .heart{
+      position:fixed;
+      bottom:-50px;
+      font-size:24px;
+      color:#ff5e7e;
+      animation: floatUp 6s linear infinite;
+      opacity:0.8;
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(0) scale(1); opacity:0;}
+      10%{opacity:1;}
+      100%{transform:translateY(-110vh) scale(1.5); opacity:0;}
+    }
+    @keyframes fadeSlide{
+      0%{opacity:0; transform:translateY(-20px);}
+      100%{opacity:1; transform:translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="romantic.mp3" loop></audio>
+  <button id="toggleMusic">🎵 Musique</button>
+
+  <!-- Image Hero -->
+  <img src="couple.jpg" alt="Couple marié" class="hero"/>
+
+  <h1>Bienvenue au mariage de Claudine et Moushe</h1>
+  <p>Tapez votre nom pour découvrir votre place :</p>
+  <input type="text" id="nameInput" placeholder="Entrez votre nom">
+  <button onclick="checkName()">Vérifier</button>
+
+  <div id="message"></div>
+
+  <script>
+    const invitedNames = [
+      "Clayton", "Strickland", "Radley", "Moushe", "Mibe", "Rosa",
+      "François", "Miriam", "Tresor", "Carine", "Yayh'e", "Mping's"
+    ];
+
+    function checkName() {
+      const name = document.getElementById("nameInput").value.trim();
+      const messageDiv = document.getElementById("message");
+
+      if (invitedNames.includes(name)) {
+        messageDiv.textContent = `✅ Bonjour ${name}, ta place est confirmée !`;
+        messageDiv.style.color = "lightgreen";
+      } else {
+        messageDiv.textContent = `❌ Désolé, ce nom ne figure pas sur la liste des invités.`;
+        messageDiv.style.color = "red";
+      }
+    }
+
+    function createHeart(){
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random()*100 + "vw";
+      heart.style.animationDuration = 4 + Math.random()*4 + "s";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),8000);
+    }
+    setInterval(createHeart,700);
+
+    const music = document.getElementById("bgMusic");
+    const toggleBtn = document.getElementById("toggleMusic");
+    let playing = false;
+    toggleBtn.addEventListener("click", ()=>{
+      if(!playing){
+        music.play();
+        toggleBtn.textContent = "⏸️ Pause";
+      }else{
+        music.pause();
+        toggleBtn.textContent = "🎵 Musique";
+      }
+      playing = !playing;
+    });
+  </script>
+
+</body>
+</html>
