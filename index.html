@@ -40,8 +40,8 @@
 </head>
 <body>
     <h1>Bienvenue au mariage de Claudine et Moushe</h1>
-    <p>Tapez votre nom pour découvrir votre table et votre place :</p>
-    <input type="text" id="nomInvite" placeholder="Entrez votre nom" />
+    <p>Tapez votre nom en MAJUSCULES pour découvrir votre table et votre place :</p>
+    <input type="text" id="nomInvite" placeholder="ENTREZ VOTRE NOM EN MAJUSCULES" />
     <button onclick="verifierInvite()">Vérifier</button>
     <p class="result" id="resultat"></p>
 
@@ -53,22 +53,36 @@
 
     <script>
         const invites = {
-            "Clayton": { table: 1, place: "A1" },
-            "Strickland": { table: 1, place: "A2" },
-            "Radley": { table: 2, place: "B1" },
-            "Moushe": { table: 2, place: "B2" },
-            "Mibe": { table: 3, place: "C1" },
-            "Rosa": { table: 3, place: "C2" },
-            "François": { table: 4, place: "D1" },
-            "Miriam": { table: 4, place: "D2" },
-            "Tresor": { table: 5, place: "E1" },
-            "Carine": { table: 5, place: "E2" },
-            "Yayh'e": { table: 6, place: "F1" },
-            "Mping's": { table: 6, place: "F2" }
-        };
+    "CLAYTON": { table: 1, place: "A1" },
+    "STRICKLAND": { table: 1, place: "A2" },
+    "RADLEY": { table: 2, place: "B1" },
+    "MOUSHE": { table: 2, place: "B2" },
+    "MIBE": { table: 3, place: "C1" },
+    "ROSA": { table: 3, place: "C2" },
+    "FRANÇOIS": { table: 4, place: "D1" },
+    "MIRIAM": { table: 4, place: "D2" },
+    "TRESOR": { table: 5, place: "E1" },
+    "CARINE": { table: 5, place: "E2" },
+    "YAYH'E": { table: 6, place: "F1" },
+    "MPING'S": { table: 6, place: "F2" },
+    "GLORIA": { table: 7, place: "G1" },
+    "RUTH": { table: 7, place: "G2" },
+    "ODETTE": { table: 8, place: "H1" },
+    "MOUJO": { table: 8, place: "H2" },
+    "MAGALIE": { table: 9, place: "I1" },
+    "RAUL": { table: 9, place: "I2" },
+    "REGINA": { table: 10, place: "J1" },
+    "ESMERALDA": { table: 10, place: "J2" },
+    "JOJO": { table: 11, place: "K1" },
+    "NATHALIE": { table: 11, place: "K2" },
+    "JEANNOT": { table: 12, place: "L1" },
+    "EMMANUELLA": { table: 12, place: "L2" },
+    "ENOCK": { table: 13, place: "M1" },
+    "NICLETTE": { table: 13, place: "M2" },
+};
 
         function verifierInvite() {
-            const nom = document.getElementById("nomInvite").value.trim();
+            const nom = document.getElementById("nomInvite").value.trim().toUpperCase();
             const resultat = document.getElementById("resultat");
 
             if (invites[nom]) {
@@ -81,12 +95,11 @@
 
         function envoyerWhatsApp() {
             const message = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe !");
-            const numero = "243851882645"; // Numéro de contact
+            const numero = "243851882645";
             const lien = `https://wa.me/${numero}?text=${message}`;
             window.open(lien, '_blank');
         }
 
-        // Compte à rebours
         const dateMariage = new Date("2025-10-25T00:00:00").getTime();
         const compteARebours = document.getElementById("compteARebours");
 
