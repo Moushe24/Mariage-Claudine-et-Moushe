@@ -21,6 +21,21 @@
             font-weight: bold;
             color: lightgreen;
         }
+        .countdown {
+            font-size: 24px;
+            margin-top: 30px;
+            color: #FFD700;
+        }
+        .whatsapp-btn {
+            margin-top: 30px;
+            background-color: #25D366;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -29,6 +44,12 @@
     <input type="text" id="nomInvite" placeholder="Entrez votre nom" />
     <button onclick="verifierInvite()">Vérifier</button>
     <p class="result" id="resultat"></p>
+
+    <div class="countdown" id="compteARebours"></div>
+
+    <button class="whatsapp-btn" onclick="envoyerWhatsApp()">
+        Confirmer ma présence sur WhatsApp
+    </button>
 
     <script>
         const invites = {
@@ -57,6 +78,40 @@
                 resultat.innerHTML = "❌ Désolé, ce nom n'est pas sur la liste.";
             }
         }
+
+        function envoyerWhatsApp() {
+            const message = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe !");
+            const numero = "243851882645"; // Numéro de contact
+            const lien = `https://wa.me/${numero}?text=${message}`;
+            window.open(lien, '_blank');
+        }
+
+        // Compte à rebours
+        const dateMariage = new Date("2025-10-25T00:00:00").getTime();
+        const compteARebours = document.getElementById("compteARebours");
+
+        setInterval(() => {
+            const maintenant = new Date().getTime();
+            const distance = dateMariage - maintenant;
+
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance < 0) {
+                compteARebours.innerHTML = "🎉 Le mariage a commencé !";
+            } else {
+                compteARebours.innerHTML = `⏳ Il reste ${jours}j ${heures}h ${minutes}m ${secondes}s avant le mariage !`;
+            }
+        }, 1000);
     </script>
+
+    <audio autoplay loop>
+        <source src="romantic.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+    <br>
+    <img src="couple.jpg" alt="couple" style="width:300px; margin-top:20px;">
 </body>
 </html>
