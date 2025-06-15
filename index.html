@@ -1,174 +1,176 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Mariage Claudine et Moushe</title>
-  <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
-      padding: 20px;
-      margin: 0;
+<meta charset="UTF-8">
+<title>Mariage Claudine & Moushe</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+    :root{
+        --main-bg:#000;
+        --text:#fff;
+        --accent:#FFD700;
+        --whatsapp:#25D366;
     }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+        background:var(--main-bg);
+        color:var(--text);
+        font-family:Arial,Helvetica,sans-serif;
+        text-align:center;
+        padding:20px;
     }
-    .left, .right {
-      flex: 1 1 300px;
-      max-width: 45%;
+    h1{margin-bottom:10px;font-size:1.4rem}
+    input,button{
+        padding:10px;
+        font-size:16px;
+        border-radius:6px;
+        border:none;
     }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      margin: 5px;
+    button{cursor:pointer}
+    .result{margin-top:20px;font-weight:bold;color:lightgreen}
+    .countdown{font-size:22px;margin:30px 0;color:var(--accent)}
+    .whatsapp-btn{
+        background:var(--whatsapp);
+        color:#fff;
+        margin-bottom:35px;
     }
-    button {
-      cursor: pointer;
+    /* Layout */
+    .wrapper{
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;
+        gap:20px;
+        flex-wrap:wrap;
     }
-    .result {
-      margin-top: 20px;
-      font-weight: bold;
+    .invitation{
+        max-width:350px;
+        width:100%;
+        border-radius:8px;
+        overflow:hidden;
+        box-shadow:0 0 10px rgba(255,255,255,.2);
     }
-    .countdown {
-      font-size: 20px;
-      color: #FFD700;
-      margin-top: 15px;
+    .invitation img{width:100%;display:block}
+    .slideshow-container{
+        max-width:350px;
+        width:100%;
+        position:relative;
+        border-radius:8px;
+        overflow:hidden;
     }
-    .whatsapp-btn {
-      background: #25D366;
-      border: none;
-      color: white;
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 6px;
+    .slide{display:none;width:100%}
+    .slide.active{display:block;}
+    @media(max-width:768px){
+        .wrapper{flex-direction:column;align-items:center}
     }
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-    }
-    .slide {
-      width: 100%;
-      display: none;
-      border-radius: 10px;
-    }
-    .fixed-image {
-      max-width: 100%;
-      border-radius: 10px;
-    }
-  </style>
+</style>
 </head>
 <body>
-  <h1 style="text-align: center;">Bienvenue au mariage de Claudine et Moushe</h1>
-  <div style="text-align: center;">
-    <p>Tapez votre nom EN MAJUSCULES :</p>
-    <input type="text" id="nomInvite" placeholder="EX: YVONNE">
-    <button onclick="verifierInvite()">Vérifier</button>
-    <p id="resultat" class="result"></p>
-    <div id="compteARebours" class="countdown"></div>
-    <button class="whatsapp-btn" onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
-  </div>
-  <div class="container">
-    <div class="left">
-      <img class="fixed-image" src="invitation.jpg" alt="Invitation">
-    </div>
-    <div class="right slideshow-container">
-      <img class="slide" src="photo1.jpg" style="display:block;">
-      <img class="slide" src="photo2.jpg">
-      <img class="slide" src="photo3.jpg">
-      <img class="slide" src="photo4.jpg">
-      <img class="slide" src="photo5.jpg">
-      <img class="slide" src="photo6.jpg">
-      <img class="slide" src="photo7.jpg">
-      <img class="slide" src="photo8.jpg">
-      <img class="slide" src="photo9.jpg">
-      <img class="slide" src="photo10.jpg">
-    </div>
-  </div>
+<h1>Bienvenue au mariage de Claudine et Moushe</h1>
 
-  <script>
-    const invites = {
-      "CLAYTON": {tableau: 1, lieu: "A1"},
-      "DIDIER BUDIMBU": {tableau: 1, lieu: "A2"},
-      "DADOU ETHAMBE": {tableau: 2, lieu: "B1"},
-      "YAYHE KABA": {tableau: 2, lieu: "B2"},
-      "FRANÇOIS": {tableau: 3, lieu: "C1"},
-      "MPINGS": {tableau: 3, lieu: "C2"},
-      "MIRIAM KABA": {tableau: 4, lieu: "D1"},
-      "DAMIEN TWAMBI": {tableau: 5, lieu: "E1"},
-      "COUPLE NDUALU": {tableau: 5, lieu: "E2"},
-      "ROSA": {tableau: 6, lieu: "F1"},
-      "JOJO": {tableau: 6, lieu: "F2"},
-      "GLORIA KABA": {tableau: 7, lieu: "G1"},
-      "RUTH KABA": {tableau: 7, lieu: "G2"},
-      "ZADIO": {tableau: 7, lieu: "G3"},
-      "MOUJO": {tableau: 7, lieu: "G4"},
-      "MAGALIE": {tableau: 7, lieu: "G5"},
-      "RAÛL": {tableau: 8, lieu: "H1"},
-      "RÉGINE": {tableau: 8, lieu: "H2"},
-      "NICLETTE BALU": {tableau: 8, lieu: "H3"},
-      "YVES BALU": {tableau: 8, lieu: "H4"},
-      "SANDRA": {tableau: 8, lieu: "H9"},
-      "URSULE": {tableau: 8, lieu: "H7"},
-      "NATHALIE MOUJO": {tableau: 9, lieu: "I1"},
-      "JEANNOT NDUALU": {tableau: 9, lieu: "I2"},
-      "EMMANUELLA NDUALU": {tableau: 9, lieu: "I3"},
-      "ENOCK NDUALU": {tableau: 9, lieu: "I4"},
-      "NICLETTE KABA": {tableau: 9, lieu: "I5"},
-      "MIREILLE": {tableau: 9, lieu: "I9"},
-      "MAO": {tableau: 9, lieu: "I8"},
-      "FRIZIANE": {tableau: 9, lieu: "I3"},
-      "JPS": {tableau: 9, lieu: "I4"},
-      "TRÉSOR KABA": {tableau: 9, lieu: "I5"}
-    };
+<p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place&nbsp;:</p>
+<input type="text" id="nomInvite" placeholder="ENTREZ VOTRE NOM EN MAJUSCULES">
+<button onclick="verifierInvite()">Vérifier</button>
 
-    function verifierInvite() {
-      const nom = document.getElementById("nomInvite").value.trim().toUpperCase();
-      const res = document.getElementById("resultat");
-      if (invites[nom]) {
+<p id="resultat" class="result"></p>
+
+<div id="compteARebours" class="countdown"></div>
+
+<button class="whatsapp-btn" onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
+
+<div class="wrapper">
+    <div class="invitation">
+        <img src="invitation.jpg" alt="Invitation Mariage">
+    </div>
+    <div class="slideshow-container" id="slides">
+        <!-- Images du diaporama -->
+        <img class="slide active" src="photo1.jpg" alt="">
+        <img class="slide" src="photo2.jpg" alt="">
+        <img class="slide" src="photo3.jpg" alt="">
+        <img class="slide" src="photo4.jpg" alt="">
+        <img class="slide" src="photo5.jpg" alt="">
+        <img class="slide" src="photo6.jpg" alt="">
+        <img class="slide" src="photo7.jpg" alt="">
+        <img class="slide" src="photo8.jpg" alt="">
+        <img class="slide" src="photo9.jpg" alt="">
+        <img class="slide" src="photo10.jpg" alt="">
+    </div>
+</div>
+
+<script>
+/* ---------- Liste des invités ---------- */
+const invites = {
+    "CLAYTON": {table:1,place:"A1"},
+    "DIDIER BUDIMBU": {table:1,place:"A2"},
+    "DADOU ETHAMBE": {table:2,place:"B1"},
+    "YAYHE KABA": {table:2,place:"B2"},
+    "FRANÇOIS": {table:3,place:"C1"},
+    "MPINGS": {table:3,place:"C2"},
+    "MIRIAM KABA": {table:4,place:"D1"},
+    "DAMIEN TWAMBI": {table:5,place:"E1"},
+    "CARINE": {table:5,place:"E2"},
+    "OUAIS": {table:6,place:"F1"},
+    "JOJO": {table:6,place:"F2"},
+    "GLORIA KABA": {table:7,place:"G1"},
+    "RUTH KABA": {table:7,place:"G2"},
+    "ZADIO": {table:7,place:"G3"},
+    "MOUJO": {table:7,place:"G4"},
+    "MAGALIE": {table:7,place:"G5"},
+    "RAÛL": {table:8,place:"H1"},
+    "RÉGINE": {table:8,place:"H2"},
+    "ESMERALDA": {table:8,place:"H3"},
+    "COUPLE BALU": {table:8,place:"H4"},
+    "SANDRA": {table:8,place:"H9"},
+    "URSULE": {table:8,place:"H7"},
+    "NATHALIE MOUJO": {table:9,place:"I1"},
+    "JEANNOT NDUALU": {table:9,place:"I2"},
+    "EMMANUELLA NDUALU": {table:9,place:"I3"},
+    "ENOCK NDUALU": {table:9,place:"I4"},
+    "NICLETTE KABA": {table:9,place:"I5"},
+    "MIREILLE": {table:9,place:"I9"},
+    "MAO": {table:9,place:"I8"},
+    "FRIZIANE": {table:9,place:"I3"},
+    "JPS": {table:9,place:"I4"},
+    "TRÉSOR KABA": {table:9,place:"I5"}
+};
+/* Vérification invité */
+function verifierInvite(){
+    const nom = document.getElementById("nomInvite").value.trim().toUpperCase();
+    const res = document.getElementById("resultat");
+    if(invites[nom]){
         const info = invites[nom];
-        res.innerHTML = `✅ Bonjour ${nom}, ta place est confirmée : Tableau ${info.tableau}, Lieu ${info.lieu}`;
+        res.innerHTML = `✅ Bonjour ${nom}, ta place est confirmée : Table ${info.table}, Place ${info.place}.`;
         res.style.color = "lightgreen";
-      } else {
+    }else{
         res.innerHTML = `❌ Désolé, ce nom n'est pas sur la liste.`;
         res.style.color = "red";
-      }
     }
-
-    function envoyerWhatsApp() {
-      const numero = "243851882645";
-      const message = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
-      window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
-    }
-
-    const dateMariage = new Date("2025-10-25T00:00:00").getTime();
-    const compte = document.getElementById("compteARebours");
-    setInterval(() => {
-      const diff = dateMariage - new Date().getTime();
-      const j = Math.floor(diff / 864e5);
-      const h = Math.floor((diff % 864e5) / 36e5);
-      const m = Math.floor((diff % 36e5) / 6e4);
-      const s = Math.floor((diff % 6e4) / 1e3);
-      compte.textContent = `⏳ Compte à rebours : ${j}j ${h}h ${m}m ${s}s`;
-    }, 1000);
-
-    let slideIndex = 0;
-    const slides = document.getElementsByClassName("slide");
-    function showSlides() {
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) { slideIndex = 1; }
-      slides[slideIndex - 1].style.display = "block";
-      setTimeout(showSlides, 4000);
-    }
-    document.addEventListener("DOMContentLoaded", showSlides);
-  </script>
+}
+/* WhatsApp */
+function envoyerWhatsApp(){
+    const numero="243851882645";
+    const msg=encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
+    window.open(`https://wa.me/${numero}?text=${msg}`,'_blank');
+}
+/* Compte à rebours */
+const dateMariage = new Date("2025-10-25T18:00:00").getTime();
+setInterval(()=>{
+    const diff = dateMariage - Date.now();
+    const j=Math.floor(diff/864e5);
+    const h=Math.floor(diff%864e5/36e5);
+    const m=Math.floor(diff%36e5/6e4);
+    const s=Math.floor(diff%6e4/1e3);
+    document.getElementById("compteARebours").textContent=`⏳ Compte à rebours : ${j}j ${h}h ${m}m ${s}s`;
+},1000);
+/* Diaporama */
+let idx=0;
+const slides=document.querySelectorAll('.slide');
+function cycle(){
+    slides.forEach(s=>s.classList.remove('active'));
+    idx=(idx+1)%slides.length;
+    slides[idx].classList.add('active');
+    setTimeout(cycle,4000);
+}
+setTimeout(cycle,4000);
+</script>
 </body>
 </html>
