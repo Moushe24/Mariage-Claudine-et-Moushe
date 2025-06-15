@@ -3,45 +3,81 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Claudine & Moushe - Mariage</title>
+  <title>Mariage Claudine et Moushe</title>
   <style>
     body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 20px;
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: black;
-      color: white;
     }
     .container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      height: 100vh;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
     }
-    .invitation, .slideshow-container {
-      flex: 1;
-      text-align: center;
-      padding: 20px;
+    .left, .right {
+      flex: 1 1 300px;
+      max-width: 45%;
     }
-    .invitation img {
-      max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 15px white;
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      margin: 5px;
+    }
+    button {
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .countdown {
+      font-size: 20px;
+      color: #FFD700;
+      margin-top: 15px;
+    }
+    .whatsapp-btn {
+      background: #25D366;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+    .slideshow-container {
+      position: relative;
+      width: 100%;
     }
     .slide {
-      display: none;
       width: 100%;
+      display: none;
+      border-radius: 10px;
+    }
+    .fixed-image {
+      max-width: 100%;
       border-radius: 10px;
     }
   </style>
 </head>
 <body>
+  <h1 style="text-align: center;">Bienvenue au mariage de Claudine et Moushe</h1>
+  <div style="text-align: center;">
+    <p>Tapez votre nom EN MAJUSCULES :</p>
+    <input type="text" id="nomInvite" placeholder="EX: YVONNE">
+    <button onclick="verifierInvite()">Vérifier</button>
+    <p id="resultat" class="result"></p>
+    <div id="compteARebours" class="countdown"></div>
+    <button class="whatsapp-btn" onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
+  </div>
   <div class="container">
-    <div class="invitation">
-      <img src="invitation.jpg" alt="Invitation Mariage">
+    <div class="left">
+      <img class="fixed-image" src="invitation.jpg" alt="Invitation">
     </div>
-    <div class="slideshow-container">
+    <div class="right slideshow-container">
       <img class="slide" src="photo1.jpg" style="display:block;">
       <img class="slide" src="photo2.jpg">
       <img class="slide" src="photo3.jpg">
@@ -56,14 +92,81 @@
   </div>
 
   <script>
+    const invites = {
+      "CLAYTON": {tableau: 1, lieu: "A1"},
+      "DIDIER BUDIMBU": {tableau: 1, lieu: "A2"},
+      "DADOU ETHAMBE": {tableau: 2, lieu: "B1"},
+      "YAYHE KABA": {tableau: 2, lieu: "B2"},
+      "FRANÇOIS": {tableau: 3, lieu: "C1"},
+      "MPINGS": {tableau: 3, lieu: "C2"},
+      "MIRIAM KABA": {tableau: 4, lieu: "D1"},
+      "DAMIEN TWAMBI": {tableau: 5, lieu: "E1"},
+      "COUPLE NDUALU": {tableau: 5, lieu: "E2"},
+      "ROSA": {tableau: 6, lieu: "F1"},
+      "JOJO": {tableau: 6, lieu: "F2"},
+      "GLORIA KABA": {tableau: 7, lieu: "G1"},
+      "RUTH KABA": {tableau: 7, lieu: "G2"},
+      "ZADIO": {tableau: 7, lieu: "G3"},
+      "MOUJO": {tableau: 7, lieu: "G4"},
+      "MAGALIE": {tableau: 7, lieu: "G5"},
+      "RAÛL": {tableau: 8, lieu: "H1"},
+      "RÉGINE": {tableau: 8, lieu: "H2"},
+      "NICLETTE BALU": {tableau: 8, lieu: "H3"},
+      "YVES BALU": {tableau: 8, lieu: "H4"},
+      "SANDRA": {tableau: 8, lieu: "H9"},
+      "URSULE": {tableau: 8, lieu: "H7"},
+      "NATHALIE MOUJO": {tableau: 9, lieu: "I1"},
+      "JEANNOT NDUALU": {tableau: 9, lieu: "I2"},
+      "EMMANUELLA NDUALU": {tableau: 9, lieu: "I3"},
+      "ENOCK NDUALU": {tableau: 9, lieu: "I4"},
+      "NICLETTE KABA": {tableau: 9, lieu: "I5"},
+      "MIREILLE": {tableau: 9, lieu: "I9"},
+      "MAO": {tableau: 9, lieu: "I8"},
+      "FRIZIANE": {tableau: 9, lieu: "I3"},
+      "JPS": {tableau: 9, lieu: "I4"},
+      "TRÉSOR KABA": {tableau: 9, lieu: "I5"}
+    };
+
+    function verifierInvite() {
+      const nom = document.getElementById("nomInvite").value.trim().toUpperCase();
+      const res = document.getElementById("resultat");
+      if (invites[nom]) {
+        const info = invites[nom];
+        res.innerHTML = `✅ Bonjour ${nom}, ta place est confirmée : Tableau ${info.tableau}, Lieu ${info.lieu}`;
+        res.style.color = "lightgreen";
+      } else {
+        res.innerHTML = `❌ Désolé, ce nom n'est pas sur la liste.`;
+        res.style.color = "red";
+      }
+    }
+
+    function envoyerWhatsApp() {
+      const numero = "243851882645";
+      const message = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
+      window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
+    }
+
+    const dateMariage = new Date("2025-10-25T00:00:00").getTime();
+    const compte = document.getElementById("compteARebours");
+    setInterval(() => {
+      const diff = dateMariage - new Date().getTime();
+      const j = Math.floor(diff / 864e5);
+      const h = Math.floor((diff % 864e5) / 36e5);
+      const m = Math.floor((diff % 36e5) / 6e4);
+      const s = Math.floor((diff % 6e4) / 1e3);
+      compte.textContent = `⏳ Compte à rebours : ${j}j ${h}h ${m}m ${s}s`;
+    }, 1000);
+
     let slideIndex = 0;
     const slides = document.getElementsByClassName("slide");
-    function showSlides(){
-      for(let i=0;i<slides.length;i++){ slides[i].style.display="none"; }
+    function showSlides() {
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
       slideIndex++;
-      if(slideIndex>slides.length){ slideIndex = 1; }
-      slides[slideIndex-1].style.display="block";
-      setTimeout(showSlides,4000);
+      if (slideIndex > slides.length) { slideIndex = 1; }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 4000);
     }
     document.addEventListener("DOMContentLoaded", showSlides);
   </script>
