@@ -1,109 +1,187 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Mariage Claudine et Moushe</title>
-  <style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    input[type="text"] {
-      padding: 10px;
-      font-size: 18px;
-      width: 80%;
-      margin-bottom: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      background-color: green;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .invitation {
-      margin-top: 20px;
-      max-width: 90%;
-    }
-    .diaporama {
-      margin-top: 20px;
-    }
-    .glisser {
-      width: 100%;
-      max-width: 400px;
-      display: none;
-    }
-    .active {
-      display: block;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Mariage Claudine et Moushe</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#000;
+  color:#fff;
+  text-align:center;
+}
+h1{margin-top:25px;}
+input,button{
+  padding:10px;
+  font-size:16px;
+  border-radius:6px;
+}
+button{cursor:pointer;}
+.result{margin-top:15px;font-weight:bold;color:lightgreen;}
+.countdown{font-size:22px;margin:25px 0;color:#FFD700;}
+
+.whatsapp-btn{
+  margin:10px auto 30px;
+  background:#25D366;border:none;color:#fff;
+  padding:12px 22px;font-size:16px;border-radius:6px;
+}
+
+.wrapper{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:20px;
+  position:relative;
+}
+
+.invitation img{
+  max-width:350px; width:45vw; border-radius:15px;
+}
+
+.slideshow-container{
+  max-width:350px; width:45vw; border-radius:15px; overflow:hidden; position:relative;
+}
+.slide{display:none;width:100%;}
+.slide_active{display:block;}
+
+@keyframes floatHearts{
+  0%{transform:translateY(0) scale(1);opacity:1;}
+  100%{transform:translateY(-120vh) scale(1.5);opacity:0;}
+}
+.heart{
+  position:absolute;
+  color:#ff0077;
+  font-size:20px;
+  animation:floatHearts 7s linear infinite;
+}
+</style>
 </head>
 <body>
-  <h1>Bienvenue au mariage de Claudine et Moushe</h1>
-  <p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place :</p>
-  <input type="text" id="nomInvite" placeholder="ENTREZ VOTRE NOM EN MAJUSCULES">
-  <button onclick="verifierInvite()">Vérifier</button>
-  <p id="resultat"></p>
 
-  <div id="compteARebours"></div>
+<h1>Bienvenue au mariage de Claudine et Moushe</h1>
+<p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place :</p>
+<input type="text" id="nomInvite" placeholder="ENTREZ VOTRE NOM EN MAJUSCULES">
+<button onclick="verifierInvite()">Vérifier</button>
+<p id="resultat" class="result"></p>
 
-  <button onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
+<div id="compteARebours" class="countdown"></div>
 
-  <div>
-    <img src="invitation.jpg" class="invitation" alt="Invitation Mariage">
+<button class="whatsapp-btn" onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
+
+<div class="wrapper">
+  <div class="invitation">
+    <img src="invitation.jpg" alt="Invitation Mariage">
   </div>
 
-  <div class="diaporama">
-    <img src="photo1.jpg" class="glisser active">
-    <img src="photo2.jpg" class="glisser">
-    <img src="photo3.jpg" class="glisser">
-    <img src="photo4.jpg" class="glisser">
-    <img src="photo5.jpg" class="glisser">
-    <img src="photo6.jpg" class="glisser">
-    <img src="photo7.jpg" class="glisser">
-    <img src="photo8.jpg" class="glisser">
-    <img src="photo9.jpg" class="glisser">
-    <img src="photo10.jpg" class="glisser">
+  <div class="slideshow-container" id="slides">
+    <!-- Images du diaporama -->
+    <img class="slide slide_active" src="photo1.jpg" alt="">
+    <img class="slide" src="photo2.jpg" alt="">
+    <img class="slide" src="photo3.jpg" alt="">
+    <img class="slide" src="photo4.jpg" alt="">
+    <img class="slide" src="photo5.jpg" alt="">
+    <img class="slide" src="photo6.jpg" alt="">
+    <img class="slide" src="photo7.jpg" alt="">
+    <img class="slide" src="photo8.jpg" alt="">
+    <img class="slide" src="photo9.jpg" alt="">
+    <img class="slide" src="photo10.jpg" alt="">
   </div>
+</div>
 
-  <script>
-    const invites = {
-      "CLAYTON": {tableau:1, lieu:"A1"},
-      "DIDIER BUDIMBU": {tableau:1, lieu:"A2"},
-      "DADOU ETHAMBE": {tableau:2, lieu:"B1"}
-    };
+<script>
+// --- Effet coeurs volants ---
+function spawnHeart(){
+  const heart=document.createElement('div');
+  heart.className='heart';
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.animationDuration=3+Math.random()*5+'s';
+  heart.textContent='❤';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+}
+setInterval(spawnHeart,800);
 
-    function verifierInvite(){
-      const nom = document.getElementById("nomInvite").value.trim().toUpperCase();
-      const res = document.getElementById("resultat");
-      if(invites[nom]){
-        const info = invites[nom];
-        res.innerHTML = `✅ Bonjour ${nom}, ta place est confirmée : Tableau ${info.tableau}, Place ${info.lieu}`;
-        res.style.color = "lightgreen";
-      } else {
-        res.innerHTML = "❌ Désolé, ce nom n'est pas sur la liste.";
-        res.style.color = "red";
-      }
-    }
+// --- Liste des invités ---
+const invites={
+"CLAYTON":{table:1,place:"A1"},
+"DIDIER BUDIMBU":{table:1,place:"A2"},
+"DADOU ETHAMBE":{table:2,place:"B1"},
+"YAYHE KABA":{table:2,place:"B2"},
+"FRANCOIS":{table:3,place:"C1"},
+"MPINGS":{table:3,place:"C2"},
+"MIRIAM KABA":{table:4,place:"D1"},
+"DAMIEN TWAMBI":{table:5,place:"E1"},
+"CARINE":{table:5,place:"E2"},
+"OUAIS":{table:6,place:"F1"},
+"JOJO":{table:6,place:"F2"},
+"GLORIA KABA":{table:7,place:"G1"},
+"RUTH KABA":{table:7,place:"G2"},
+"ZADIO":{table:7,place:"G3"},
+"MOUJO":{table:7,place:"G4"},
+"MAGALIE":{table:7,place:"G5"},
+"RAUL":{table:8,place:"H1"},
+"REGINE":{table:8,place:"H2"},
+"ESMERALDA":{table:8,place:"H3"},
+"COUPLE BALU":{table:8,place:"H4"},
+"SANDRA":{table:8,place:"H9"},
+"URSULE":{table:8,place:"H7"},
+"NATHALIE MOUJO":{table:9,place:"I1"},
+"JEANNOT NDULAU":{table:9,place:"I2"},
+"EMMANUELLA NDULAU":{table:9,place:"I3"},
+"ENOCK NDULAU":{table:9,place:"I4"},
+"NICLETTE BALU":{table:9,place:"I5"},
+"MIREILLE":{table:9,place:"I9"},
+"MAO":{table:9,place:"I8"},
+"FRIZIANE":{table:9,place:"I3"},
+"JPS":{table:9,place:"I4"},
+"TRESOR KABA":{table:9,place:"I5"}
+};
 
-    function envoyerWhatsApp(){
-      const numero = "+243851082645";
-      const message = encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
-      window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
-    }
+function verifierInvite(){
+  const nom=document.getElementById('nomInvite').value.trim().toUpperCase();
+  const res=document.getElementById('resultat');
+  if(invites[nom]){
+    const info=invites[nom];
+    res.style.color='lightgreen';
+    res.textContent=`✅ Bonjour ${nom}, ta place est confirmée : Table ${info.table}, Place ${info.place}.`;
+  }else{
+    res.style.color='red';
+    res.textContent='❌ Désolé, ce nom n\'est pas sur la liste.';
+  }
+}
 
-    // Diaporama
-    let index = 0;
-    const slides = document.getElementsByClassName("glisser");
-    setInterval(() => {
-      for(let i = 0; i < slides.length; i++) slides[i].classList.remove("active");
-      index = (index + 1) % slides.length;
-      slides[index].classList.add("active");
-    }, 3000);
-  </script>
+// --- WhatsApp ---
+function envoyerWhatsApp(){
+  const numero="243851882645";
+  const msg=encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
+  window.open(`https://wa.me/${numero}?text=${msg}`,'_blank');
+}
+
+// --- Compte à rebours ---
+const dateMariage=new Date("2025-10-25T18:00:00").getTime();
+const compte=document.getElementById('compteARebours');
+setInterval(()=>{
+  const diff=dateMariage-Date.now();
+  if(diff<0){compte.textContent="🎉 C'est le grand jour !";return;}
+  const j=Math.floor(diff/864e5);
+  const h=Math.floor((diff%864e5)/36e5);
+  const m=Math.floor((diff%36e5)/6e4);
+  const s=Math.floor((diff%6e4)/1e3);
+  compte.textContent=`⏳ ${j}j ${h}h ${m}m ${s}s avant le mariage !`;
+},1000);
+
+// --- Diaporama ---
+let slideIndex=0;
+const slides=document.querySelectorAll('.slide');
+function showSlides(){
+  slides.forEach(s=>s.style.display="none");
+  slideIndex=(slideIndex+1)%slides.length;
+  slides[slideIndex].style.display="block";
+}
+setInterval(showSlides,4000);
+</script>
+
 </body>
 </html>
