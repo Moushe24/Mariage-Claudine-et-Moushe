@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Claudine & Moushe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .image-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+      max-height: 600px;
+      border-radius: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .image-section img {
+        width: 45%;
+      }
+    }
+
+    .countdown {
+      font-size: 1.5em;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenue au mariage de Claudine et Moushe</h1>
+
+  <div class="image-section">
+    <img src="invitation.jpg" alt="Invitation au mariage">
+    <img src="couple.jpg" alt="Claudine & Moushe">
+  </div>
+
+  <div class="countdown" id="countdown"></div>
+
+  <script>
+    const countdown = () => {
+      const eventDate = new Date("2025-10-25T18:00:00").getTime();
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "🎉 Le mariage a commencé !";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        `⏳ Il reste ${days}j ${hours}h ${minutes}m ${seconds}s avant le mariage !`;
+    };
+
+    setInterval(countdown, 1000);
+    countdown();
+  </script>
+</body>
+</html>
