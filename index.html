@@ -1,90 +1,77 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Mariage Claudine & Moushe</title>
-<style>
-body{background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;text-align:center;margin:0;padding:20px;}
-h1{font-size:1.8em;margin:0 0 15px;}
-input,button{padding:8px 12px;font-size:16px;margin:4px;}
-button{cursor:pointer;background:#25D366;border:none;color:#fff;border-radius:4px;}
-#result{margin-top:15px;font-weight:bold;font-size:1.2em;}
-.countdown{margin-top:20px;font-size:1.2em;color:#FFD700;}
-.wrapper{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:25px;}
-.wrapper img{width:300px;max-width:90vw;height:auto;border-radius:12px;box-shadow:0 0 10px #000;}
-.heart{position:fixed;top:-30px;font-size:24px;color:#b30e0e;animation:fall 3s linear forwards;}
-@keyframes fall{to{transform:translateY(100vh);opacity:0;}}
-</style>
+  <meta charset="UTF-8">
+  <title>Claudine & Moushe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .image-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+      max-height: 600px;
+      border-radius: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .image-section img {
+        width: 45%;
+      }
+    }
+
+    .countdown {
+      font-size: 1.5em;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-<h1>Bienvenue au mariage de Claudine et Moushe</h1>
-<p>Tapez votre nom EN MAJUSCULES pour découvrir votre table et votre place :</p>
-<input type="text" id="nomInvite" placeholder="EX: CLAYTON">
-<button onclick="verifierInvite()">Vérifier</button>
-<p id="result"></p>
-<button onclick="envoyerWhatsApp()">Confirmer ma présence sur WhatsApp</button>
+  <h1>Bienvenue au mariage de Claudine et Moushe</h1>
 
-<div class="wrapper">
-   <div><img src="invitation.jpg" alt="Invitation"></div>
-   <div><img src="couple.jpg" alt="Couple"></div>
-</div>
+  <div class="image-section">
+    <img src="invitation.jpg" alt="Invitation au mariage">
+    <img src="couple.jpg" alt="Claudine & Moushe">
+  </div>
 
-<p id="compte" class="countdown"></p>
+  <div class="countdown" id="countdown"></div>
 
-<script>
-// -- Liste des invités (complétez/laissez tel quel pour test) --
-const invites = {
-  "CLAYTON": {table:1,place:"A1"},
-  "DIDIER BUDIMBU": {table:1,place:"A2"}
-};
+  <script>
+    const countdown = () => {
+      const eventDate = new Date("2025-10-25T18:00:00").getTime();
+      const now = new Date().getTime();
+      const distance = eventDate - now;
 
-function verifierInvite(){
-  const nom=document.getElementById('nomInvite').value.trim().toUpperCase();
-  const res=document.getElementById('result');
-  if(invites[nom]){
-     const info=invites[nom];
-     res.innerHTML=`✅ Bonjour ${nom}, ta place est confirmée : Table ${info.table}, Place ${info.place}`;
-     res.style.color='lightgreen';
-  }else{
-     res.innerHTML=`❌ Désolé, ce nom n'est pas sur la liste.`;
-     res.style.color='red';
-  }
-}
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "🎉 Le mariage a commencé !";
+        return;
+      }
 
-function envoyerWhatsApp(){
-  const numero="243851082645";
-  const message=encodeURIComponent("Bonjour, je confirme ma présence au mariage de Claudine et Moushe");
-  window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
-}
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-// -- Compte à rebours --
-const dateMariage=new Date("2025-10-25T18:00:00").getTime();
-const elCompte=document.getElementById('compte');
-setInterval(()=>{
-  const diff=dateMariage - Date.now();
-  if(diff<=0){
-     elCompte.textContent="🎉 C'est le grand jour !";
-     return;
-  }
-  const j=Math.floor(diff/86400000);
-  const h=Math.floor((diff%86400000)/3600000);
-  const m=Math.floor((diff%3600000)/60000);
-  const s=Math.floor((diff%60000)/1000);
-  elCompte.textContent=`⏳ Compte à rebours : ${j}j ${h}h ${m}m ${s}s`;
-},1000);
+      document.getElementById("countdown").innerHTML =
+        `⏳ Il reste ${days}j ${hours}h ${minutes}m ${seconds}s avant le mariage !`;
+    };
 
-// -- Pluie de coeurs --
-function spawnHeart(){
-  const heart=document.createElement('div');
-  heart.className='heart';
-  heart.style.left=Math.random()*100+'vw';
-  heart.style.animationDuration=3+Math.random()*2+'s';
-  heart.textContent='❤';
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),5000);
-}
-setInterval(spawnHeart,800);
-</script>
+    setInterval(countdown, 1000);
+    countdown();
+  </script>
 </body>
 </html>
