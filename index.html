@@ -1,77 +1,231 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Claudine & Moushe</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-
-    .image-section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      margin-top: 30px;
-      gap: 20px;
-    }
-
-    .image-section img {
-      max-width: 100%;
-      height: auto;
-      max-height: 600px;
-      border-radius: 12px;
-    }
-
-    @media (min-width: 768px) {
-      .image-section img {
-        width: 45%;
-      }
-    }
-
-    .countdown {
-      font-size: 1.5em;
-      margin-top: 30px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Mariage Claudine & Moushe</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{background:#000;color:#fff;font-family:Arial,sans-serif;text-align:center;margin:0;padding:20px;overflow-x:hidden}
+h1{margin-top:0;font-size:1.8em}
+input,button{padding:10px;font-size:16px;border-radius:6px;margin:6px}
+button{cursor:pointer}
+.whatsapp{background:#25D366;color:#fff;border:none}
+#result{margin-top:15px;font-weight:bold;font-size:1.2em}
+.countdown{margin-top:20px;font-size:1.4em;color:#FFD700}
+.img-row{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:25px}
+.img-row img{width:300px;max-width:90vw;border-radius:12px}
+.heart{position:fixed;top:-30px;font-size:24px;color:#ff3366;animation:fall 3s linear forwards;z-index:1000}
+@keyframes fall{to{transform:translateY(100vh);opacity:0}}
+</style>
 </head>
 <body>
-  <h1>Bienvenue au mariage de Claudine et Moushe</h1>
+<h1>Bienvenue au mariage de Claudine & Moushe</h1>
+<p>Tape ton nom EN MAJUSCULES pour connaître ta table :</p>
+<input id="nom" placeholder="VOTRE NOM">
+<button onclick="checkName()">Vérifier</button>
+<div id="result"></div>
+<button class="whatsapp" onclick="whatsApp()">Confirmer sur WhatsApp</button>
+<div class="countdown" id="cd"></div>
+<div class="img-row">
+  <img src="invitation.jpg" alt="Invitation">
+  <img src="couple.jpg" alt="Couple">
+</div>
+<script>
+const invites = {
+  "CLAYTON": {table: 1, place: "A1"},
+  "SUPRIELAND": {table: 1, place: "B2"},
+  "RADLEY": {table: 1, place: "C3"},
+  "DADY": {table: 1, place: "D4"},
+  "JESUS": {table: 1, place: "E5"},
+  "CHARLES": {table: 1, place: "F6"},
+  "MARINA": {table: 1, place: "G7"},
+  "TRÉSOR": {table: 1, place: "H8"},
+  "CARINE": {table: 2, place: "A1"},
+  "YAYH": {table: 2, place: "B2"},
+  "MPINGI": {table: 2, place: "C3"},
+  "GLORIA": {table: 2, place: "D4"},
+  "RUTH": {table: 2, place: "E5"},
+  "ODETTE": {table: 2, place: "F6"},
+  "MOUJO": {table: 2, place: "G7"},
+  "MAGALIE": {table: 2, place: "H8"},
+  "RAUL": {table: 3, place: "A1"},
+  "REGINA": {table: 3, place: "B2"},
+  "ESMERALDA": {table: 3, place: "C3"},
+  "JOJO": {table: 3, place: "D4"},
+  "NATHALIE": {table: 3, place: "E5"},
+  "JEANNOT": {table: 3, place: "F6"},
+  "EMMANUELLA": {table: 3, place: "G7"},
+  "ENOCK": {table: 3, place: "H8"},
+  "NICLETTE": {table: 4, place: "A1"},
+  "INVITÉ1": {table: 4, place: "B2"},
+  "INVITÉ2": {table: 4, place: "C3"},
+  "INVITÉ3": {table: 4, place: "D4"},
+  "INVITÉ4": {table: 4, place: "E5"},
+  "INVITÉ5": {table: 4, place: "F6"},
+  "INVITÉ6": {table: 4, place: "G7"},
+  "INVITÉ7": {table: 4, place: "H8"},
+  "INVITÉ8": {table: 5, place: "A1"},
+  "INVITÉ9": {table: 5, place: "B2"},
+  "INVITÉ10": {table: 5, place: "C3"},
+  "INVITÉ11": {table: 5, place: "D4"},
+  "INVITÉ12": {table: 5, place: "E5"},
+  "INVITÉ13": {table: 5, place: "F6"},
+  "INVITÉ14": {table: 5, place: "G7"},
+  "INVITÉ15": {table: 5, place: "H8"},
+  "INVITÉ16": {table: 6, place: "A1"},
+  "INVITÉ17": {table: 6, place: "B2"},
+  "INVITÉ18": {table: 6, place: "C3"},
+  "INVITÉ19": {table: 6, place: "D4"},
+  "INVITÉ20": {table: 6, place: "E5"},
+  "INVITÉ21": {table: 6, place: "F6"},
+  "INVITÉ22": {table: 6, place: "G7"},
+  "INVITÉ23": {table: 6, place: "H8"},
+  "INVITÉ24": {table: 7, place: "A1"},
+  "INVITÉ25": {table: 7, place: "B2"},
+  "INVITÉ26": {table: 7, place: "C3"},
+  "INVITÉ27": {table: 7, place: "D4"},
+  "INVITÉ28": {table: 7, place: "E5"},
+  "INVITÉ29": {table: 7, place: "F6"},
+  "INVITÉ30": {table: 7, place: "G7"},
+  "INVITÉ31": {table: 7, place: "H8"},
+  "INVITÉ32": {table: 8, place: "A1"},
+  "INVITÉ33": {table: 8, place: "B2"},
+  "INVITÉ34": {table: 8, place: "C3"},
+  "INVITÉ35": {table: 8, place: "D4"},
+  "INVITÉ36": {table: 8, place: "E5"},
+  "INVITÉ37": {table: 8, place: "F6"},
+  "INVITÉ38": {table: 8, place: "G7"},
+  "INVITÉ39": {table: 8, place: "H8"},
+  "INVITÉ40": {table: 9, place: "A1"},
+  "INVITÉ41": {table: 9, place: "B2"},
+  "INVITÉ42": {table: 9, place: "C3"},
+  "INVITÉ43": {table: 9, place: "D4"},
+  "INVITÉ44": {table: 9, place: "E5"},
+  "INVITÉ45": {table: 9, place: "F6"},
+  "INVITÉ46": {table: 9, place: "G7"},
+  "INVITÉ47": {table: 9, place: "H8"},
+  "INVITÉ48": {table: 10, place: "A1"},
+  "INVITÉ49": {table: 10, place: "B2"},
+  "INVITÉ50": {table: 10, place: "C3"},
+  "INVITÉ51": {table: 10, place: "D4"},
+  "INVITÉ52": {table: 10, place: "E5"},
+  "INVITÉ53": {table: 10, place: "F6"},
+  "INVITÉ54": {table: 10, place: "G7"},
+  "INVITÉ55": {table: 10, place: "H8"},
+  "INVITÉ56": {table: 11, place: "A1"},
+  "INVITÉ57": {table: 11, place: "B2"},
+  "INVITÉ58": {table: 11, place: "C3"},
+  "INVITÉ59": {table: 11, place: "D4"},
+  "INVITÉ60": {table: 11, place: "E5"},
+  "INVITÉ61": {table: 11, place: "F6"},
+  "INVITÉ62": {table: 11, place: "G7"},
+  "INVITÉ63": {table: 11, place: "H8"},
+  "INVITÉ64": {table: 12, place: "A1"},
+  "INVITÉ65": {table: 12, place: "B2"},
+  "INVITÉ66": {table: 12, place: "C3"},
+  "INVITÉ67": {table: 12, place: "D4"},
+  "INVITÉ68": {table: 12, place: "E5"},
+  "INVITÉ69": {table: 12, place: "F6"},
+  "INVITÉ70": {table: 12, place: "G7"},
+  "INVITÉ71": {table: 12, place: "H8"},
+  "INVITÉ72": {table: 13, place: "A1"},
+  "INVITÉ73": {table: 13, place: "B2"},
+  "INVITÉ74": {table: 13, place: "C3"},
+  "INVITÉ75": {table: 13, place: "D4"},
+  "INVITÉ76": {table: 13, place: "E5"},
+  "INVITÉ77": {table: 13, place: "F6"},
+  "INVITÉ78": {table: 13, place: "G7"},
+  "INVITÉ79": {table: 13, place: "H8"},
+  "INVITÉ80": {table: 14, place: "A1"},
+  "INVITÉ81": {table: 14, place: "B2"},
+  "INVITÉ82": {table: 14, place: "C3"},
+  "INVITÉ83": {table: 14, place: "D4"},
+  "INVITÉ84": {table: 14, place: "E5"},
+  "INVITÉ85": {table: 14, place: "F6"},
+  "INVITÉ86": {table: 14, place: "G7"},
+  "INVITÉ87": {table: 14, place: "H8"},
+  "INVITÉ88": {table: 15, place: "A1"},
+  "INVITÉ89": {table: 15, place: "B2"},
+  "INVITÉ90": {table: 15, place: "C3"},
+  "INVITÉ91": {table: 15, place: "D4"},
+  "INVITÉ92": {table: 15, place: "E5"},
+  "INVITÉ93": {table: 15, place: "F6"},
+  "INVITÉ94": {table: 15, place: "G7"},
+  "INVITÉ95": {table: 15, place: "H8"},
+  "INVITÉ96": {table: 16, place: "A1"},
+  "INVITÉ97": {table: 16, place: "B2"},
+  "INVITÉ98": {table: 16, place: "C3"},
+  "INVITÉ99": {table: 16, place: "D4"},
+  "INVITÉ100": {table: 16, place: "E5"},
+  "INVITÉ101": {table: 16, place: "F6"},
+  "INVITÉ102": {table: 16, place: "G7"},
+  "INVITÉ103": {table: 16, place: "H8"},
+  "INVITÉ104": {table: 17, place: "A1"},
+  "INVITÉ105": {table: 17, place: "B2"},
+  "INVITÉ106": {table: 17, place: "C3"},
+  "INVITÉ107": {table: 17, place: "D4"},
+  "INVITÉ108": {table: 17, place: "E5"},
+  "INVITÉ109": {table: 17, place: "F6"},
+  "INVITÉ110": {table: 17, place: "G7"},
+  "INVITÉ111": {table: 17, place: "H8"},
+  "INVITÉ112": {table: 18, place: "A1"},
+  "INVITÉ113": {table: 18, place: "B2"},
+  "INVITÉ114": {table: 18, place: "C3"},
+  "INVITÉ115": {table: 18, place: "D4"},
+  "INVITÉ116": {table: 18, place: "E5"},
+  "INVITÉ117": {table: 18, place: "F6"},
+  "INVITÉ118": {table: 18, place: "G7"},
+  "INVITÉ119": {table: 18, place: "H8"},
+  "INVITÉ120": {table: 19, place: "A1"},
+  "INVITÉ121": {table: 19, place: "B2"},
+  "INVITÉ122": {table: 19, place: "C3"},
+  "INVITÉ123": {table: 19, place: "D4"},
+  "INVITÉ124": {table: 19, place: "E5"},
+  "INVITÉ125": {table: 19, place: "F6"},
+  "INVITÉ126": {table: 19, place: "G7"}
+};
 
-  <div class="image-section">
-    <img src="invitation.jpg" alt="Invitation au mariage">
-    <img src="couple.jpg" alt="Claudine & Moushe">
-  </div>
+// Vérification
+function checkName(){
+  const n=document.getElementById('nom').value.trim().toUpperCase();
+  const res=document.getElementById('result');
+  if(invites[n]){
+    const i=invites[n];
+    res.style.color='lightgreen';
+    res.textContent='✅ Bonjour '+n+', Table '+i.table+', Place '+i.place;
+  }else{res.style.color='red';res.textContent='❌ Nom non trouvé';}
+}
 
-  <div class="countdown" id="countdown"></div>
+// WhatsApp
+function whatsApp(){
+  const msg=encodeURIComponent('Bonjour, je confirme ma présence au mariage de Claudine & Moushe.');
+  window.open('https://wa.me/243851882645?text='+msg,'_blank');
+}
 
-  <script>
-    const countdown = () => {
-      const eventDate = new Date("2025-10-25T18:00:00").getTime();
-      const now = new Date().getTime();
-      const distance = eventDate - now;
+// Compte à rebours
+const d=new Date('2025-10-25T18:00:00').getTime();
+const cd=document.getElementById('cd');
+setInterval(()=>{
+  const diff=d-Date.now();
+  if(diff<=0){cd.textContent='🎉 C\'est le jour J !';return;}
+  const j=Math.floor(diff/864e5);
+  const h=Math.floor((diff%864e5)/36e5);
+  const m=Math.floor((diff%36e5)/6e4);
+  const s=Math.floor((diff%6e4)/1000);
+  cd.textContent=`⏳ ${j}j ${h}h ${m}m ${s}s avant le mariage`;
+},1000);
 
-      if (distance < 0) {
-        document.getElementById("countdown").innerHTML = "🎉 Le mariage a commencé !";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML =
-        `⏳ Il reste ${days}j ${hours}h ${minutes}m ${seconds}s avant le mariage !`;
-    };
-
-    setInterval(countdown, 1000);
-    countdown();
-  </script>
+// Cœurs animés
+function heart(){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=2+Math.random()*2+'s';
+  h.textContent='❤';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(heart,800);
+</script>
 </body>
 </html>
