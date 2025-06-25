@@ -1,276 +1,236 @@
-
-<!DOCTYPE html>
+<!DOCTYPE html>More actions
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Rosa & François - Mariage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff0f6;
-            text-align: center;
-            margin: 0;
-        }
-        h1 {
-            color: #d63384;
-            margin-top: 20px;
-        }
-        .invitation {
-            max-width: 600px;
-            margin: 20px auto;
-            border-radius: 10px;
-        }
-        .search-section {
-            margin: 30px auto;
-            text-align: center;
-        }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 60%;
-            max-width: 400px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-left: 10px;
-            background-color: #d63384;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .contact-links {
-            margin-top: 30px;
-        }
-        .contact-button {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 15px;
-            background-color: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .floating {
-            position: absolute;
-            width: 50px;
-            animation: float 10s infinite;
-            opacity: 0.6;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-10vh) rotate(360deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Mariage Claudine & Moushe</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{background:#000;color:#fff;font-family:Arial,sans-serif;text-align:center;margin:0;padding:20px;overflow-x:hidden}
+h1{margin-top:0;font-size:1.8em}
+input,button{padding:10px;font-size:16px;border-radius:6px;margin:6px}
+button{cursor:pointer}
+.whatsapp{background:#25D366;color:#fff;border:none}
+#result{margin-top:15px;font-weight:bold;font-size:1.2em}
+.countdown{margin-top:20px;font-size:1.4em;color:#FFD700}
+.img-row{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:25px}
+.img-row img{width:300px;max-width:90vw;border-radius:12px}
+.heart{position:fixed;top:-30px;font-size:24px;color:#ff3366;animation:fall 3s linear forwards;z-index:1000}
+@keyframes fall{to{transform:translateY(100vh);opacity:0}}
+</style>
 </head>
 <body>
-    <h1>Bienvenue au mariage de Rosa & François</h1>
-    <div class="invitation">
-        <img src="invitation.jpg" alt="Invitation" width="100%">
-    </div>
-    <div class="search-section">
-        <label for="guestName">Entrez votre nom pour vérifier votre invitation :</label><br>
-        <input type="text" id="guestName" placeholder="Ex: Alex Kabila">
-        <button onclick="verifierNom()">VÉRIFIER</button>
-        <div id="resultat" class="message"></div>
-    </div>
-    <div class="contact-links">
-        <a class="contact-button" href="https://wa.me/33641892295" target="_blank">WhatsApp</a>
-        <a class="contact-button" href="https://m.me/" target="_blank">Messenger</a>
-        <a class="contact-button" href="https://instagram.com/" target="_blank">Instagram</a>
-    </div>
-    <div class="animation">
-        <img src="couple-sticker.png" class="floating" style="left: 10%;">
-        <img src="couple-sticker.png" class="floating" style="left: 30%;">
-        <img src="couple-sticker.png" class="floating" style="left: 50%;">
-        <img src="couple-sticker.png" class="floating" style="left: 70%;">
-        <img src="couple-sticker.png" class="floating" style="left: 90%;">
-    </div>
-    <script>
-        const guestList = {
-            "alex kabila": "Table 1, Place A1",
-            "carine lungu": "Table 1, Place A2",
-            "ben mukendi": "Table 2, Place B1",
-"invité 1": "Tableau 1, Place B",
-"invité 2": "Tableau 1, Place C",
-"invité 3": "Tableau 1, Place D",
-"invité 4": "Tableau 1, Place E",
-"invité 5": "Tableau 1, Place F",
-"invité 6": "Tableau 1, Place G",
-"invité 7": "Tableau 1, Place H",
-"invité 8": "Tableau 2, Place A",
-"invité 9": "Tableau 2, Place B",
-"invité 10": "Tableau 2, Place C",
-"invité 11": "Tableau 2, Place D",
-"invité 12": "Tableau 2, Place E",
-"invité 13": "Tableau 2, Place F",
-"invité 14": "Tableau 2, Place G",
-"invité 15": "Tableau 2, Place H",
-"invité 16": "Tableau 3, Place A",
-"invité 17": "Tableau 3, Place B",
-"invité 18": "Tableau 3, Place C",
-"invité 19": "Tableau 3, Place D",
-"invité 20": "Tableau 3, Place E",
-"invité 21": "Tableau 3, Place F",
-"invité 22": "Tableau 3, Place G",
-"invité 23": "Tableau 3, Place H",
-"invité 24": "Tableau 4, Place A",
-"invité 25": "Tableau 4, Place B",
-"invité 26": "Tableau 4, Place C",
-"invité 27": "Tableau 4, Place D",
-"invité 28": "Tableau 4, Place E",
-"invité 29": "Tableau 4, Place F",
-"invité 30": "Tableau 4, Place G",
-"invité 31": "Tableau 4, Place H",
-"invité 32": "Tableau 5, Place A",
-"invité 33": "Tableau 5, Place B",
-"invité 34": "Tableau 5, Place C",
-"invité 35": "Tableau 5, Place D",
-"invité 36": "Tableau 5, Place E",
-"invité 37": "Tableau 5, Place F",
-"invité 38": "Tableau 5, Place G",
-"invité 39": "Tableau 5, Place H",
-"invité 40": "Tableau 6, Place A",
-"invité 41": "Tableau 6, Place B",
-"invité 42": "Tableau 6, Place C",
-"invité 43": "Tableau 6, Place D",
-"invité 44": "Tableau 6, Place E",
-"invité 45": "Tableau 6, Place F",
-"invité 46": "Tableau 6, Place G",
-"invité 47": "Tableau 6, Place H",
-"invité 48": "Tableau 7, Place A",
-"invité 49": "Tableau 7, Place B",
-"invité 50": "Tableau 7, Place C",
-"invité 51": "Tableau 7, Place D",
-"invité 52": "Tableau 7, Place E",
-"invité 53": "Tableau 7, Place F",
-"invité 54": "Tableau 7, Place G",
-"invité 55": "Tableau 7, Place H",
-"invité 56": "Tableau 8, Place A",
-"invité 57": "Tableau 8, Place B",
-"invité 58": "Tableau 8, Place C",
-"invité 59": "Tableau 8, Place D",
-"invité 60": "Tableau 8, Place E",
-"invité 61": "Tableau 8, Place F",
-"invité 62": "Tableau 8, Place G",
-"invité 63": "Tableau 8, Place H",
-"invité 64": "Tableau 9, Place A",
-"invité 65": "Tableau 9, Place B",
-"invité 66": "Tableau 9, Place C",
-"invité 67": "Tableau 9, Place D",
-"invité 68": "Tableau 9, Place E",
-"invité 69": "Tableau 9, Place F",
-"invité 70": "Tableau 9, Place G",
-"invité 71": "Tableau 9, Place H",
-"invité 72": "Tableau 10, Place A",
-"invité 73": "Tableau 10, Place B",
-"invité 74": "Tableau 10, Place C",
-"invité 75": "Tableau 10, Place D",
-"invité 76": "Tableau 10, Place E",
-"invité 77": "Tableau 10, Place F",
-"invité 78": "Tableau 10, Place G",
-"invité 79": "Tableau 10, Place H",
-"invité 80": "Tableau 11, Place A",
-"invité 81": "Tableau 11, Place B",
-"invité 82": "Tableau 11, Place C",
-"invité 83": "Tableau 11, Place D",
-"invité 84": "Tableau 11, Place E",
-"invité 85": "Tableau 11, Place F",
-"invité 86": "Tableau 11, Place G",
-"invité 87": "Tableau 11, Place H",
-"invité 88": "Tableau 12, Place A",
-"invité 89": "Tableau 12, Place B",
-"invité 90": "Tableau 12, Place C",
-"invité 91": "Tableau 12, Place D",
-"invité 92": "Tableau 12, Place E",
-"invité 93": "Tableau 12, Place F",
-"invité 94": "Tableau 12, Place G",
-"invité 95": "Tableau 12, Place H",
-"invité 96": "Tableau 13, Place A",
-"invité 97": "Tableau 13, Place B",
-"invité 98": "Tableau 13, Place C",
-"invité 99": "Tableau 13, Place D",
-"invité 100": "Tableau 13, Place E",
-"invité 101": "Tableau 13, Place F",
-"invité 102": "Tableau 13, Place G",
-"invité 103": "Tableau 13, Place H",
-"invité 104": "Tableau 14, Place A",
-"invité 105": "Tableau 14, Place B",
-"invité 106": "Tableau 14, Place C",
-"invité 107": "Tableau 14, Place D",
-"invité 108": "Tableau 14, Place E",
-"invité 109": "Tableau 14, Place F",
-"invité 110": "Tableau 14, Place G",
-"invité 111": "Tableau 14, Place H",
-"invité 112": "Tableau 15, Place A",
-"invité 113": "Tableau 15, Place B",
-"invité 114": "Tableau 15, Place C",
-"invité 115": "Tableau 15, Place D",
-"invité 116": "Tableau 15, Place E",
-"invité 117": "Tableau 15, Place F",
-"invité 118": "Tableau 15, Place G",
-"invité 119": "Tableau 15, Place H",
-"invité 120": "Tableau 16, Place A",
-"invité 121": "Tableau 16, Place B",
-"invité 122": "Tableau 16, Place C",
-"invité 123": "Tableau 16, Place D",
-"invité 124": "Tableau 16, Place E",
-"invité 125": "Tableau 16, Place F",
-"invité 126": "Tableau 16, Place G",
-"invité 127": "Tableau 16, Place H",
-"invité 128": "Tableau 17, Place A",
-"invité 129": "Tableau 17, Place B",
-"invité 130": "Tableau 17, Place C",
-"invité 131": "Tableau 17, Place D",
-"invité 132": "Tableau 17, Place E",
-"invité 133": "Tableau 17, Place F",
-"invité 134": "Tableau 17, Place G",
-"invité 135": "Tableau 17, Place H",
-"invité 136": "Tableau 18, Place A",
-"invité 137": "Tableau 18, Place B",
-"invité 138": "Tableau 18, Place C",
-"invité 139": "Tableau 18, Place D",
-"invité 140": "Tableau 18, Place E",
-"invité 141": "Tableau 18, Place F",
-"invité 142": "Tableau 18, Place G",
-"invité 143": "Tableau 18, Place H",
-"invité 144": "Tableau 19, Place A",
-"invité 145": "Tableau 19, Place B",
-"invité 146": "Tableau 19, Place C",
-"invité 147": "Tableau 19, Place D",
-"invité 148": "Tableau 19, Place E",
-"invité 149": "Tableau 19, Place F",
-"invité 150": "Tableau 19, Place G",
+<h1>Bienvenue au mariage de Claudine & Moushe</h1>
+<p>Tape ton nom EN MAJUSCULES pour connaître ta table :</p>
+<input id="nom" placeholder="VOTRE NOM">
+<button onclick="checkName()">Vérifier</button>
+<div id="result"></div>
+<button class="whatsapp" onclick="whatsApp()">Confirmer sur WhatsApp</button>
+<div class="countdown" id="cd"></div>
+<div class="img-row">
+  <img src="invitation.jpg" alt="Invitation">
+  <img src="couple.jpg" alt="Couple">
+</div>
+<script>
+const invites = {
+  "CLAYTON": {table: 1, place: "A1"},
+  "MADAME BADIBANGA": {table: 1, place: "B2"},
+  "ROGER BADIBANGA": {table: 1, place: "C3"},
+  "MOUJO": {table: 1, place: "D4"},
+  "NATHALIE MOUJO": {table: 1, place: "E5"},
+  "MOUJO": {table: 1, place: "A1"},
+  "NATHALIE MOUJO": {table: 1, place: "B2"},
+  "ELY MATONDO": {table: 1, place: "C3"},
+  "ROGER BADIBANGA": {table: 1, place: "D4"},
+  "FIDEL LUSHIMA": {table: 1, place: "E5"},
+  "YAYHE KABA": {table: 1, place: "F6"},
+  "NICLETTE KABA": {table: 1, place: "G7"},
+  "TSHISWAKA": {table: 1, place: "H8"},
+  "FRIZIANE": {table: 2, place: "A1"},
+  "JPS": {table: 2, place: "B2"},
+  "RUBENS KUTANGU": {table: 2, place: "C3"},
+  "GLORIA KABA": {table: 2, place: "D4"},
+  "RUTH KABA": {table: 2, place: "E5"},
+  "FRANCOIS DIKIMA": {table: 2, place: "F6"},
+  "ROSA DIKIMA": {table: 2, place: "G7"},
+  "TRESOR KABA": {table: 2, place: "H8"},
+  "MIRIAM KABA": {table: 3, place: "A1"},
+  "MPINGS": {table: 3, place: "B2"},
+  "ESMERALDA": {table: 3, place: "C3"},
+  "JOJO": {table: 3, place: "D4"},
+  "NATHALIE": {table: 3, place: "E5"},
+  "JEANNOT": {table: 3, place: "F6"},
+  "EMMANUELLA": {table: 3, place: "G7"},
+  "ENOCK": {table: 3, place: "H8"},
+  "NICLETTE": {table: 4, place: "A1"},
+  "ZADIO": {table: 4, place: "B2"},
+  "INVITÉ2": {table: 4, place: "C3"},
+  "INVITÉ3": {table: 4, place: "D4"},
+  "INVITÉ4": {table: 4, place: "E5"},
+  "INVITÉ5": {table: 4, place: "F6"},
+  "INVITÉ6": {table: 4, place: "G7"},
+  "INVITÉ7": {table: 4, place: "H8"},
+  "URSULE NIMY": {table: 5, place: "A1"},
+  "MAGALIE": {table: 5, place: "B2"},
+  "SANDRA": {table: 5, place: "C3"},
+  "BELANGE": {table: 5, place: "D4"},
+  "NATACHA": {table: 5, place: "E5"},
+  "NATACHA ENFANT": {table: 5, place: "F6"},
+  "RODRIGUE NDALA": {table: 5, place: "G7"},
+  "LEON BONDO": {table: 5, place: "H8"},
+  "INVITÉ16": {table: 6, place: "A1"},
+  "INVITÉ17": {table: 6, place: "B2"},
+  "INVITÉ18": {table: 6, place: "C3"},
+  "INVITÉ19": {table: 6, place: "D4"},
+  "INVITÉ20": {table: 6, place: "E5"},
+  "INVITÉ21": {table: 6, place: "F6"},
+  "INVITÉ22": {table: 6, place: "G7"},
+  "INVITÉ23": {table: 6, place: "H8"},
+  "NADEGE KAY": {table: 7, place: "A1"},
+  "KAY": {table: 7, place: "B2"},
+  "NICLETTE BALU": {table: 7, place: "C3"},
+  "YVES BALU": {table: 7, place: "D4"},
+  "THETHE ZOLA": {table: 7, place: "E5"},
+  "NICLETTE AMBULE": {table: 7, place: "F6"},
+  "BATTY": {table: 7, place: "G7"},
+  "GUY": {table: 7, place: "H8"},
+  "DAMIEN TWAMBI": {table: 8, place: "A1"},
+  "PASCAL MWAMBA": {table: 8, place: "B2"},
+  "MPINGS BIATA": {table: 8, place: "C3"},
+  "ANNICK MALUKA": {table: 8, place: "D4"},
+  "MAMOU": {table: 8, place: "E5"},
+  "INVITÉ37": {table: 8, place: "F6"},
+  "INVITÉ38": {table: 8, place: "G7"},
+  "INVITÉ39": {table: 8, place: "H8"},
+  "CARINE NDUALU": {table: 9, place: "A1"},
+  "JEANNOT NDUALU": {table: 9, place: "B2"},
+  "INVITÉ42": {table: 9, place: "C3"},
+  "INVITÉ43": {table: 9, place: "D4"},
+  "INVITÉ44": {table: 9, place: "E5"},
+  "INVITÉ45": {table: 9, place: "F6"},
+  "INVITÉ46": {table: 9, place: "G7"},
+  "INVITÉ47": {table: 9, place: "H8"},
+  "FRANCINE KUBANGILA": {table: 10, place: "A1"},
+  "PAULINE": {table: 10, place: "B2"},
+  "INVITÉ50": {table: 10, place: "C3"},
+  "INVITÉ51": {table: 10, place: "D4"},
+  "INVITÉ52": {table: 10, place: "E5"},
+  "INVITÉ53": {table: 10, place: "F6"},
+  "INVITÉ54": {table: 10, place: "G7"},
+  "INVITÉ55": {table: 10, place: "H8"},
+  "INVITÉ56": {table: 11, place: "A1"},
+  "INVITÉ57": {table: 11, place: "B2"},
+  "INVITÉ58": {table: 11, place: "C3"},
+  "INVITÉ59": {table: 11, place: "D4"},
+  "INVITÉ60": {table: 11, place: "E5"},
+  "INVITÉ61": {table: 11, place: "F6"},
+  "INVITÉ62": {table: 11, place: "G7"},
+  "INVITÉ63": {table: 11, place: "H8"},
+  "INVITÉ64": {table: 12, place: "A1"},
+  "INVITÉ65": {table: 12, place: "B2"},
+  "INVITÉ66": {table: 12, place: "C3"},
+  "INVITÉ67": {table: 12, place: "D4"},
+  "INVITÉ68": {table: 12, place: "E5"},
+  "INVITÉ69": {table: 12, place: "F6"},
+  "INVITÉ70": {table: 12, place: "G7"},
+  "INVITÉ71": {table: 12, place: "H8"},
+  "INVITÉ72": {table: 13, place: "A1"},
+  "INVITÉ73": {table: 13, place: "B2"},
+  "INVITÉ74": {table: 13, place: "C3"},
+  "INVITÉ75": {table: 13, place: "D4"},
+  "INVITÉ76": {table: 13, place: "E5"},
+  "INVITÉ77": {table: 13, place: "F6"},
+  "INVITÉ78": {table: 13, place: "G7"},
+  "INVITÉ79": {table: 13, place: "H8"},
+  "INVITÉ80": {table: 14, place: "A1"},
+  "INVITÉ81": {table: 14, place: "B2"},
+  "INVITÉ82": {table: 14, place: "C3"},
+  "INVITÉ83": {table: 14, place: "D4"},
+  "INVITÉ84": {table: 14, place: "E5"},
+  "INVITÉ85": {table: 14, place: "F6"},
+  "INVITÉ86": {table: 14, place: "G7"},
+  "INVITÉ87": {table: 14, place: "H8"},
+  "INVITÉ88": {table: 15, place: "A1"},
+  "INVITÉ89": {table: 15, place: "B2"},
+  "INVITÉ90": {table: 15, place: "C3"},
+  "INVITÉ91": {table: 15, place: "D4"},
+  "INVITÉ92": {table: 15, place: "E5"},
+  "INVITÉ93": {table: 15, place: "F6"},
+  "INVITÉ94": {table: 15, place: "G7"},
+  "INVITÉ95": {table: 15, place: "H8"},
+  "INVITÉ96": {table: 16, place: "A1"},
+  "INVITÉ97": {table: 16, place: "B2"},
+  "INVITÉ98": {table: 16, place: "C3"},
+  "INVITÉ99": {table: 16, place: "D4"},
+  "INVITÉ100": {table: 16, place: "E5"},
+  "INVITÉ101": {table: 16, place: "F6"},
+  "INVITÉ102": {table: 16, place: "G7"},
+  "INVITÉ103": {table: 16, place: "H8"},
+  "INVITÉ104": {table: 17, place: "A1"},
+  "INVITÉ105": {table: 17, place: "B2"},
+  "INVITÉ106": {table: 17, place: "C3"},
+  "INVITÉ107": {table: 17, place: "D4"},
+  "INVITÉ108": {table: 17, place: "E5"},
+  "INVITÉ109": {table: 17, place: "F6"},
+  "INVITÉ110": {table: 17, place: "G7"},
+  "INVITÉ111": {table: 17, place: "H8"},
+  "INVITÉ112": {table: 18, place: "A1"},
+  "INVITÉ113": {table: 18, place: "B2"},
+  "INVITÉ114": {table: 18, place: "C3"},
+  "INVITÉ115": {table: 18, place: "D4"},
+  "INVITÉ116": {table: 18, place: "E5"},
+  "INVITÉ117": {table: 18, place: "F6"},
+  "INVITÉ118": {table: 18, place: "G7"},
+  "INVITÉ119": {table: 18, place: "H8"},
+  "INVITÉ120": {table: 19, place: "A1"},
+  "INVITÉ121": {table: 19, place: "B2"},
+  "INVITÉ122": {table: 19, place: "C3"},
+  "INVITÉ123": {table: 19, place: "D4"},
+  "INVITÉ124": {table: 19, place: "E5"},
+  "INVITÉ125": {table: 19, place: "F6"},
+  "INVITÉ126": {table: 19, place: "G7"}
+};
 
-        };
+// Vérification
+function checkName(){
+  const n=document.getElementById('nom').value.trim().toUpperCase();
+  const res=document.getElementById('result');
+  if(invites[n]){
+    const i=invites[n];
+    res.style.color='lightgreen';
+    res.textContent='✅ Bonjour '+n+', Table '+i.table+', Place '+i.place;
+  }else{res.style.color='red';res.textContent='❌ Nom non trouvé';}
+}
 
-        function verifierNom() {
-            const nom = document.getElementById("guestName").value.trim().toLowerCase();
-            const resultat = document.getElementById("resultat");
+// WhatsApp
+function whatsApp(){
+  const msg=encodeURIComponent('Bonjour, je confirme ma présence au mariage de Claudine & Moushe.');
+  window.open('https://wa.me/243851882645?text='+msg,'_blank');
+}
 
-            if (guestList[nom]) {
-                resultat.innerText = `MERCI ET HONORÉ DE VOTRE PRÉSENCE – ${guestList[nom]}`;
-                resultat.style.color = "green";
-            } else {
-                resultat.innerText = "DÉSOLÉ, VOUS N'ÊTES PAS PARMI LES INVITÉS";
-                resultat.style.color = "red";
-            }
-        }
-    </script>
+// Compte à rebours
+const d=new Date('2025-10-25T18:00:00').getTime();
+const cd=document.getElementById('cd');
+setInterval(()=>{
+  const diff=d-Date.now();
+  if(diff<=0){cd.textContent='🎉 C\'est le jour J !';return;}
+  const j=Math.floor(diff/864e5);
+  const h=Math.floor((diff%864e5)/36e5);
+  const m=Math.floor((diff%36e5)/6e4);
+  const s=Math.floor((diff%6e4)/1000);
+  cd.textContent=`⏳ ${j}j ${h}h ${m}m ${s}s avant le mariage`;
+},1000);
+
+// Cœurs animés
+function heart(){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=2+Math.random()*2+'s';
+  h.textContent='❤';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(heart,800);
+</script>
 </body>
 </html>
